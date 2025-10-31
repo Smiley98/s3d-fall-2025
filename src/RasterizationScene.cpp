@@ -61,7 +61,18 @@ void Example2()
 
 void Example3()
 {
+	for (int y = 0; y < CPU_IMAGE_SIZE; y++)
+	{
+		for (int x = 0; x < CPU_IMAGE_SIZE; x++)
+		{
+			// Calculate uv by dividing the xy position of the pixel by image size
+			Vector2 uv = V2_ZERO;
 
+
+			Color color = Float2ToColor(&uv.x);
+			SetPixel(&gImageCPU, x, y, color);
+		}
+	}
 }
 
 void Example4()
