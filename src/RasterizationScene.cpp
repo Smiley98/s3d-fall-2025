@@ -14,6 +14,7 @@ void RasterizationScene::OnUnload()
 
 void RasterizationScene::OnUpdate(float dt)
 {
+	// Challenge: render a circle using an SDF (https://www.shadertoy.com/view/XXtfDn)
 	ClearColor(&gImageCPU, BLACK);
 	for (int y = 0; y < CPU_IMAGE_SIZE; y++)
 	{
