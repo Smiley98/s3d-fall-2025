@@ -23,8 +23,8 @@ void RasterizationScene::OnUpdate(float dt)
 	ClearColor(&gImageCPU, BLACK);
 	//Example1();
 	//Example2();
-	//Example3();
-	Example4();
+	Example3();
+	//Example4();
 	//Example5();
 }
 
@@ -35,7 +35,9 @@ void Example1()
 	{
 		for (int x = 0; x < CPU_IMAGE_SIZE; x++)
 		{
-			Color color = BLUE;
+			Vector3 rgb = { 0.5f, 0.0f, 1.0f };
+
+			Color color = Float3ToColor(&rgb.x);
 			SetPixel(&gImageCPU, x, y, color);
 		}
 	}
@@ -67,7 +69,8 @@ void Example3()
 		for (int x = 0; x < CPU_IMAGE_SIZE; x++)
 		{
 			// Calculate uv by dividing the xy position of the pixel by image size
-			Vector2 uv = V2_ZERO;
+			Vector2 uv = { x, y };
+			uv /= CPU_IMAGE_SIZE;
 
 			Color color = Float2ToColor(&uv.x);
 			SetPixel(&gImageCPU, x, y, color);
