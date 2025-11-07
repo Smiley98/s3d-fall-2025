@@ -4,6 +4,16 @@
 #include "Camera.h"
 #include "Time.h"
 
+float sdCircle(Vector2 p, float r)
+{
+	return Length(p) - r;
+}
+
+float step(float edge, float x)
+{
+	return x < edge ? 0.0f : 1.0f;
+}
+
 void Example1();
 void Example2();
 
@@ -31,7 +41,12 @@ void Example1()
 	{
 		for (int x = 0; x < CPU_IMAGE_SIZE; x++)
 		{
-			Vector3 rgb = V3_ONE;
+			Vector2 uv = { x, y };
+			uv /= CPU_IMAGE_SIZE;
+			uv = uv * 2.0f - 1.0f;
+
+			float c = sdCircle(uv, 0.75f);
+			Vector3 rgb = V3_ONE * step(0.0f, c);
 
 			Color color = Float3ToColor(&rgb.x);
 			SetPixel(&gImageCPU, x, y, color);
