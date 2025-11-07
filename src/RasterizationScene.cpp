@@ -4,15 +4,8 @@
 #include "Camera.h"
 #include "Time.h"
 
-float sdCircle(Vector2 p, float r)
-{
-	return Length(p) - r;
-}
-
-float step(float edge, float x)
-{
-	return x < edge ? 0.0f : 1.0f;
-}
+float sdCircle(Vector2 p, float r);
+float step(float edge, float x);
 
 void Example1();
 void Example2();
@@ -28,13 +21,31 @@ void RasterizationScene::OnUnload()
 void RasterizationScene::OnUpdate(float dt)
 {
 	ClearColor(&gImageCPU, BLACK);
-	Example1();
+	//Example1();
 	//Example2();
+
+	// Example function call from Rasterization.h
+	// Should render a horizontal line around the bottom-right quadrant of your screen!
+	DrawLineX(&gImageCPU, 100, 200, 400, RED);
+
+	// Homework:
+	// Draw a border around your screen using DrawRectLines
+	// Draw 2 horizontal lines
+	// Draw 2 vertical lines
+	// Draw a rectangle in the centre of your screen and outline it
+	// Draw a circle at your mouse cursor and outline it
+	// Draw a line connecting the above two shapes
 }
 
-// Challenge: Port the following shader to s3d: https://www.shadertoy.com/view/XXtfDn
-// If you want to use glsl's step function, you'll also need to port that to s3d:
-// https://registry.khronos.org/OpenGL-Refpages/gl4/html/step.xhtml
+// Fast way of rendering a circle -- "rasterization" - instead of evaluating every pixel, only evaluate the pixel's within the circle!
+// Moreover, the evaluation is extremely cheap since its just a bunch of different-sized scanlines
+void Example2()
+{
+	DrawCircle(&gImageCPU, 400, 256, 50, MAGENTA);
+}
+
+// Slow way of rendering a circle -- evaluated for every pixel even if the pixel is not within the circle!
+// Moreover, the evaluation is extremely expensive given the square-root calculation in the circle's SDF.
 void Example1()
 {
 	for (int y = 0; y < CPU_IMAGE_SIZE; y++)
@@ -54,6 +65,12 @@ void Example1()
 	}
 }
 
-void Example2()
+float sdCircle(Vector2 p, float r)
 {
+	return Length(p) - r;
+}
+
+float step(float edge, float x)
+{
+	return x < edge ? 0.0f : 1.0f;
 }
