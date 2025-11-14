@@ -4,8 +4,10 @@
 #include "Window.h"
 #include "Camera.h"
 #include "Time.h"
+#include "Mesh.h"
 
 void Homework4();
+void Example1();
 
 void RasterizationScene::OnLoad()
 {
@@ -18,7 +20,8 @@ void RasterizationScene::OnUnload()
 void RasterizationScene::OnUpdate(float dt)
 {
 	ClearColor(&gImageCPU, BLACK);
-	Homework4();
+	//Homework4();
+	Example1();
 }
 
 void Homework4()
@@ -53,4 +56,16 @@ void Homework4()
 	// Draw a rectangle in the centre of your screen and outline it
 	// Draw a circle at your mouse cursor and outline it
 	// Draw a line connecting the above two shapes
+}
+
+void Example1()
+{
+	Vector3 triangle[]
+	{
+		{ 0.5f, -0.5f, 0.0f },
+		{ 0.0f,  0.5f, 0.0f },
+		{-0.5f, -0.5f, 0.0f }
+	};
+
+	DrawFaceWireframes(&gImageCPU, triangle, 0);
 }
