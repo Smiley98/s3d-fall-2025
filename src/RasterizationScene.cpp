@@ -8,6 +8,10 @@
 
 void Homework4();
 void Example1();
+void Example2();
+void Example3();
+
+std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> unique_vertices, std::vector<uint16_t> indices);
 
 void RasterizationScene::OnLoad()
 {
@@ -21,7 +25,8 @@ void RasterizationScene::OnUpdate(float dt)
 {
 	ClearColor(&gImageCPU, BLACK);
 	//Homework4();
-	Example1();
+	//Example1();
+	Example2();
 }
 
 void Homework4()
@@ -68,4 +73,38 @@ void Example1()
 	};
 
 	DrawFaceWireframes(&gImageCPU, triangle, 0);
+}
+
+void Example2()
+{
+	std::vector<Vector3> plane_vertex_positions
+	{
+		{  0.5f, -0.5f, 0.0f },	// bottom-right
+		{  0.5f,  0.5f, 0.0f },	// top-right
+		{ -0.5f,  0.5f, 0.0f },	// top-left
+		{ -0.5f, -0.5f, 0.0f },	// bottom-left
+	};
+
+	std::vector<uint16_t> plane_vertex_indices
+	{
+		0, 1, 3,
+		1, 2, 3
+	};
+
+	std::vector<Vector3> positions;
+	positions.resize(plane_vertex_indices.size());
+	for (int i = 0; i < positions.size(); i++)
+		positions[i] = plane_vertex_positions[plane_vertex_indices[i]];
+
+	DrawFaceWireframes(&gImageCPU, positions.data(), 0, MAGENTA);
+	DrawFaceWireframes(&gImageCPU, positions.data(), 1, RED);
+}
+
+void Example3()
+{
+}
+
+std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> unique_vertices, std::vector<uint16_t> indices)
+{
+	return std::vector<Vector3>();
 }
