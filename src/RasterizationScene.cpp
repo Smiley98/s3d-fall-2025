@@ -99,8 +99,21 @@ void Example2()
 
 void Example3()
 {
+	// Next week's homework will require animation so I recommend you try it now for practice!
+	// Challenge: rotate the mesh continuously about the Y-axis at 100 degrees per second
+	// You can use the TotalTime() function to get the time in seconds since the program started
+	// You can use the RotateY() function to generate a matrix that rotates about the Y-axis in radians
+	// You can use the DEG2RAD macro to convert from degrees (human-friendly) to radians (computer-friendly)
+	// Here is an example of using a matrix to translate instead of rotate:
+
+	// Translation of 5 units along the x-axis
+	Matrix t = Translate({ 5.0f, 0.0f, 0.0f });	
+	Vector3 v = { 0.0f, 0.0f, 0.0f };
+	// v goes from (0, 0, 0) to (5, 0, 0) after the matrix transformation is applied!
+	v = t * v;
+
 	Mesh mesh = gMeshSphere;
-	std::vector<Vector3> positions = VerticesFromIndices(gMeshSphere.positions, gMeshSphere.indices);
+	std::vector<Vector3> positions = VerticesFromIndices(mesh.positions, mesh.indices);
 
 	for (int i = 0; i < positions.size() / 3; i++)
 		DrawFaceWireframes(&gImageCPU, positions.data(), i, GREEN);
