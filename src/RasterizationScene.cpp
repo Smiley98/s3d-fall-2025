@@ -10,6 +10,8 @@ void Homework4();
 void Example1();
 void Example2();
 
+std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> positions, std::vector<int> indices);
+
 void RasterizationScene::OnLoad()
 {
 }
@@ -74,29 +76,52 @@ void Example1()
 
 void Example2()
 {
-	//Mesh* mesh = &gMeshSphere;
+	Mesh* mesh = &gMeshSphere;
 
-	Vector3 plane_vertices[]
-	{
-		{  0.5f, -0.5f, 0.0f },	// bottom-right
-		{  0.5f,  0.5f, 0.0f },	// top-right
-		{ -0.5f,  0.5f, 0.0f },	// top-left
-		{ -0.5f, -0.5f, 0.0f }	// bottom-left
-	};
+	std::vector<Vector3> plane_vertices;
+	plane_vertices.resize(4);
+	plane_vertices[0] = { 0.5f, -0.5f, 0.0f };	// bottom-right;
+	plane_vertices[1] = { 0.5f,  0.5f, 0.0f };	// top-right;
+	plane_vertices[2] = { -0.5f,  0.5f, 0.0f };	// top-left;
+	plane_vertices[3] = { -0.5f, -0.5f, 0.0f };	// bottom-left;
 
-	int plane_indices[]
-	{
-		0, 1, 3,
-		1, 2, 3
-	};
+	std::vector<int> plane_indices;
+	plane_indices.resize(6);
+	plane_indices[0] = 0;
+	plane_indices[1] = 1;
+	plane_indices[2] = 3;
+	plane_indices[3] = 1;
+	plane_indices[4] = 2;
+	plane_indices[5] = 3;
 
-	Vector3 plane_positions[6];
-	for (int i = 0; i < 6; i++)
-	{
-		plane_positions[i] = plane_vertices[plane_indices[i]];
-	}
+	//int plane_indices[]
+	//{
+	//	0, 1, 3,
+	//	1, 2, 3
+	//};
+
+	//Vector3 plane_positions[6];
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	plane_positions[i] = plane_vertices[plane_indices[i]];
+	//}
+
+	std::vector<Vector3> plane_positions = VerticesFromIndices(plane_vertices, plane_indices);
 	
 	Image* img = &gImageCPU;
-	DrawFaceWireframes(img, plane_positions, 0, GREEN);
-	DrawFaceWireframes(img, plane_positions, 1, GREEN);
+	DrawFaceWireframes(img, plane_positions.data(), 0, GREEN);
+	DrawFaceWireframes(img, plane_positions.data(), 1, GREEN);
+}
+
+std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> positions, std::vector<int> indices)
+{
+	std::vector<Vector3> vertices;
+	vertices.resize(indices.size());
+
+	for (int i = 0; i < indices.size(); i++)
+	{
+		vertices[i] = positions[indices[i]];
+	}
+
+	return vertices;
 }
