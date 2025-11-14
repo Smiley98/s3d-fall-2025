@@ -27,7 +27,8 @@ void RasterizationScene::OnUpdate(float dt)
 	//Homework4();
 	//Example1();
 	//Example2();
-	Example3();
+	//Example3();
+	DrawEllipse(&gImageCPU, 255, 255, 25, 10, RED);
 }
 
 void Homework4()

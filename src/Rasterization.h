@@ -126,6 +126,68 @@ inline void DrawCircle(Image* image, int cx, int cy, int cr, Color color)
 	}
 }
 
+inline void DrawEllipse(Image* img, int xc, int yc, int a, int b, Color color) {
+	int x = 0;
+	int y = b;
+
+	// Region 1: where slope > -1
+	int a2 = a * a;
+	int b2 = b * b;
+	int fa2 = 4 * a2;
+	int fb2 = 4 * b2;
+
+	// Initial decision parameter for region 1
+	int d1 = b2 - (a2 * b) + (0.25f * a2);
+	int dx = 2 * b2 * x;
+	int dy = 2 * a2 * y;
+
+	// Store previous points for line drawing
+	int prevX = x, prevY = y;
+
+	// Region 1: Connect points horizontally as we step x
+	while (dx < dy) {
+		// Draw horizontal line segments connecting symmetric points
+		DrawLine(img, xc - x, yc + y, xc + x, yc + y, color);
+		DrawLine(img, xc - x, yc - y, xc + x, yc - y, color);
+
+		if (d1 < 0) {
+			x++;
+			dx += fb2;
+			d1 += dx + b2;
+		}
+		else {
+			x++;
+			y--;
+			dx += fb2;
+			dy -= fa2;
+			d1 += dx - dy + b2;
+		}
+	}
+
+	// Region 2: where slope <= -1
+	int d2 = b2 * (x + 0.5f) * (x + 0.5f) + a2 * (y - 1) * (y - 1) - a2 * b2;
+
+	// Region 2: Connect points horizontally as we step y
+	while (y >= 0) {
+		// Draw horizontal line segments connecting symmetric points
+		DrawLine(img, xc - x, yc + y, xc + x, yc + y, color);
+		DrawLine(img, xc - x, yc - y, xc + x, yc - y, color);
+
+		if (d2 > 0) {
+			y--;
+			dy -= fa2;
+			d2 += a2 - dy;
+		}
+		else {
+			x++;
+			y--;
+			dx += fb2;
+			dy -= fa2;
+			d2 += dx - dy + a2;
+		}
+	}
+}
+
 inline void DrawCircleLines(Image* image, int cx, int cy, int cr, Color color)
 {
 	int x = 0;
