@@ -12,14 +12,14 @@ struct Rect
 
 inline void DrawLineX(Image* image, int row, int x0, int x1, Color color)
 {
-	// for x in x0 to x1:
-	//		set pixel at x, row
+	for (int x = x0; x <= x1; x++)
+		SetPixel(image, x, row, color);
 }
 
 inline void DrawLineY(Image* image, int col, int y0, int y1, Color color)
 {
-	// for y in y0 to y1:
-	//		set pixel at col, y
+	for (int y = y0; y <= y1; y++)
+		SetPixel(image, col, y, color);
 }
 
 inline void DrawLine(Image* image, int x0, int y0, int x1, int y1, Color color)
@@ -48,18 +48,33 @@ inline void DrawRect(Image* image, int x, int y, int w, int h, Color color)
 	// for ry in y to y + h:
 	//		for rx in x to x + h:
 	//			set pixel at rx, ry
+	for (int ry = y; ry <= y + h; ry++)
+	{
+		for (int rx = x; rx <= x + w; rx++)
+		{
+			SetPixel(image, rx, ry, color);
+		}
+	}
 
 	// Option 2:
 	// Render vertical lines for all columns
+	//for (int col = x; col <= x + w; col++)
+	//	DrawLineY(image, col, y, y + h, color);
 
 	// Option 3:
 	// Render horizontal lines for all rows
+	//for (int row = y; row <= y + h; row++)
+	//	DrawLineX(image, row, x, x + w, color);
 }
 
 inline void DrawRectLines(Image* image, int x, int y, int w, int h, Color color)
 {
 	// Render vertical lines at x and x + w
 	// Render horizontal lines at y and y + h
+	DrawLineX(image, y + 0, x, x + w, color);
+	DrawLineX(image, y + h, x, x + w, color);
+	DrawLineY(image, x + 0, y, y + h, color);
+	DrawLineY(image, x + w, y, y + h, color);
 }
 
 inline void DrawCircle(Image* image, int cx, int cy, int cr, Color color)
