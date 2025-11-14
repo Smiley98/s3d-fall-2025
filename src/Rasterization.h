@@ -151,3 +151,23 @@ inline void DrawCircleLines(Image* image, int cx, int cy, int cr, Color color)
 		}
 	}
 }
+
+inline void DrawFaceWireframes(Image* image, Vector3* positions, size_t face, Color color = WHITE)
+{
+	size_t vertex = face * 3;
+	for (size_t i = 0; i < 3; i++)
+	{
+		Vector3 v0 = positions[vertex + i];
+		Vector3 v1 = positions[vertex + ((i + 1) % 3)];
+		v0.x = Remap(v0.x, -1.0f, 1.0f, 0, image->width - 1);
+		v0.y = Remap(v0.y, -1.0f, 1.0f, 0, image->height - 1);
+		v1.x = Remap(v1.x, -1.0f, 1.0f, 0, image->width - 1);
+		v1.y = Remap(v1.y, -1.0f, 1.0f, 0, image->height - 1);
+
+		int x0 = v0.x;
+		int y0 = v0.y;
+		int x1 = v1.x;
+		int y1 = v1.y;
+		DrawLine(image, x0, y0, x1, y1, color);
+	}
+}
