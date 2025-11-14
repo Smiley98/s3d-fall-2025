@@ -91,11 +91,7 @@ void Example2()
 		1, 2, 3
 	};
 
-	std::vector<Vector3> positions;
-	positions.resize(plane_vertex_indices.size());
-	for (int i = 0; i < positions.size(); i++)
-		positions[i] = plane_vertex_positions[plane_vertex_indices[i]];
-
+	std::vector<Vector3> positions = VerticesFromIndices(plane_vertex_positions, plane_vertex_indices);
 	DrawFaceWireframes(&gImageCPU, positions.data(), 0, MAGENTA);
 	DrawFaceWireframes(&gImageCPU, positions.data(), 1, RED);
 }
@@ -106,5 +102,11 @@ void Example3()
 
 std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> unique_vertices, std::vector<uint16_t> indices)
 {
-	return std::vector<Vector3>();
+	std::vector<Vector3> positions;
+	positions.resize(indices.size());
+
+	for (int i = 0; i < positions.size(); i++)
+		positions[i] = unique_vertices[indices[i]];
+
+	return positions;
 }
