@@ -26,7 +26,8 @@ void RasterizationScene::OnUpdate(float dt)
 	ClearColor(&gImageCPU, BLACK);
 	//Homework4();
 	//Example1();
-	Example2();
+	//Example2();
+	Example3();
 }
 
 void Homework4()
@@ -98,6 +99,11 @@ void Example2()
 
 void Example3()
 {
+	Mesh mesh = gMeshSphere;
+	std::vector<Vector3> positions = VerticesFromIndices(gMeshSphere.positions, gMeshSphere.indices);
+
+	for (int i = 0; i < positions.size() / 3; i++)
+		DrawFaceWireframes(&gImageCPU, positions.data(), i, GREEN);
 }
 
 std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> unique_vertices, std::vector<uint16_t> indices)
