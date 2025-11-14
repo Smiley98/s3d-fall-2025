@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Camera.h"
 #include "Time.h"
+#include "Mesh.h"
 
 void Homework4();
 void Example1();
@@ -21,7 +22,8 @@ void RasterizationScene::OnUpdate(float dt)
 {
 	ClearColor(&gImageCPU, BLACK);
 	//Homework4();
-	Example1();
+	//Example1();
+	Example2();
 }
 
 void Homework4()
@@ -72,5 +74,29 @@ void Example1()
 
 void Example2()
 {
+	//Mesh* mesh = &gMeshSphere;
 
+	Vector3 plane_vertices[]
+	{
+		{  0.5f, -0.5f, 0.0f },	// bottom-right
+		{  0.5f,  0.5f, 0.0f },	// top-right
+		{ -0.5f,  0.5f, 0.0f },	// top-left
+		{ -0.5f, -0.5f, 0.0f }	// bottom-left
+	};
+
+	int plane_indices[]
+	{
+		0, 1, 3,
+		1, 2, 3
+	};
+
+	Vector3 plane_positions[6];
+	for (int i = 0; i < 6; i++)
+	{
+		plane_positions[i] = plane_vertices[plane_indices[i]];
+	}
+	
+	Image* img = &gImageCPU;
+	DrawFaceWireframes(img, plane_positions, 0, GREEN);
+	DrawFaceWireframes(img, plane_positions, 1, GREEN);
 }
