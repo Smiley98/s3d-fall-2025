@@ -102,6 +102,9 @@ void Example2()
 
 void Example3()
 {
+	// Challenge: Try applying a transformation matrix to sphere_position in order to rotate the sphere continuously about the y-axis
+	// You'll want to use the RotateY() function in conjunction with the TotalTime() function!
+
 	std::vector<Vector3> sphere_position = VerticesFromIndices(gMeshSphere.positions, gMeshSphere.indices);
 	for (int i = 0; i < sphere_position.size() / 3; i++)
 		DrawFaceWireframes(&gImageCPU, sphere_position.data(), i, GREEN);
