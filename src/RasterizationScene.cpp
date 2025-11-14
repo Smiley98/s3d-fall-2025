@@ -9,8 +9,8 @@
 void Homework4();
 void Example1();
 void Example2();
-
-std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> positions, std::vector<int> indices);
+void Example3();
+std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> positions, std::vector<uint16_t> indices);
 
 void RasterizationScene::OnLoad()
 {
@@ -25,7 +25,8 @@ void RasterizationScene::OnUpdate(float dt)
 	ClearColor(&gImageCPU, BLACK);
 	//Homework4();
 	//Example1();
-	Example2();
+	//Example2();
+	Example3();
 }
 
 void Homework4()
@@ -76,8 +77,6 @@ void Example1()
 
 void Example2()
 {
-	Mesh* mesh = &gMeshSphere;
-
 	std::vector<Vector3> plane_vertices;
 	plane_vertices.resize(4);
 	plane_vertices[0] = { 0.5f, -0.5f, 0.0f };	// bottom-right;
@@ -85,7 +84,7 @@ void Example2()
 	plane_vertices[2] = { -0.5f,  0.5f, 0.0f };	// top-left;
 	plane_vertices[3] = { -0.5f, -0.5f, 0.0f };	// bottom-left;
 
-	std::vector<int> plane_indices;
+	std::vector<uint16_t> plane_indices;
 	plane_indices.resize(6);
 	plane_indices[0] = 0;
 	plane_indices[1] = 1;
@@ -94,18 +93,6 @@ void Example2()
 	plane_indices[4] = 2;
 	plane_indices[5] = 3;
 
-	//int plane_indices[]
-	//{
-	//	0, 1, 3,
-	//	1, 2, 3
-	//};
-
-	//Vector3 plane_positions[6];
-	//for (int i = 0; i < 6; i++)
-	//{
-	//	plane_positions[i] = plane_vertices[plane_indices[i]];
-	//}
-
 	std::vector<Vector3> plane_positions = VerticesFromIndices(plane_vertices, plane_indices);
 	
 	Image* img = &gImageCPU;
@@ -113,7 +100,14 @@ void Example2()
 	DrawFaceWireframes(img, plane_positions.data(), 1, GREEN);
 }
 
-std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> positions, std::vector<int> indices)
+void Example3()
+{
+	std::vector<Vector3> sphere_position = VerticesFromIndices(gMeshSphere.positions, gMeshSphere.indices);
+	for (int i = 0; i < sphere_position.size() / 3; i++)
+		DrawFaceWireframes(&gImageCPU, sphere_position.data(), i, GREEN);
+}
+
+std::vector<Vector3> VerticesFromIndices(std::vector<Vector3> positions, std::vector<uint16_t> indices)
 {
 	std::vector<Vector3> vertices;
 	vertices.resize(indices.size());
