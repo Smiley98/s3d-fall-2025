@@ -26,12 +26,17 @@ inline void DrawLine(Image* image, int x0, int y0, int x1, int y1, Color color)
 {
 	// let dx = x1 - x0
 	// let dy = y1 - y0
+	int dx = x1 - x0;
+	int dy = y1 - y0;
 
 	// let steps = abs dx if abs dx > abs dy, else abs dy
 	// abs = "absolute value"
+	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
 
 	// let xStep = dx / steps as float
 	// let yStep = dy / steps as float
+	float xStep = dx / (float)steps;
+	float yStep = dy / (float)steps;
 
 	// x = x0
 	// y = y0
@@ -40,6 +45,14 @@ inline void DrawLine(Image* image, int x0, int y0, int x1, int y1, Color color)
 	//		x += xStep
 	//		y += yStep
 	//		set pixel at x, y
+	float x = x0;
+	float y = y0;
+	for (int i = 0; i <= steps; i++)
+	{
+		SetPixel(image, x, y, color);
+		x += xStep;
+		y += yStep;
+	}
 }
 
 inline void DrawRect(Image* image, int x, int y, int w, int h, Color color)

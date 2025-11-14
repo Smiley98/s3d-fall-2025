@@ -26,6 +26,8 @@ void RasterizationScene::OnUpdate(float dt)
 	DrawRect(img, 300, 300, 100, 100, BLUE);
 	DrawRectLines(img, 299, 299, 101, 101, MAGENTA);
 
+	DrawLine(img, 0, 0, CPU_IMAGE_SIZE - 1, CPU_IMAGE_SIZE - 1, YELLOW);
+
 	// Homework:
 	// Draw a border around your screen using DrawRectLines
 	// Draw 2 horizontal lines
